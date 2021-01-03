@@ -23,14 +23,14 @@ const ListResults = ({item, deleteItem, navigate}) => {
 const styles = StyleSheet.create({
     listItem: {
         padding: 15,
-        backgroundColor: '#f8f8f8',
+    //    backgroundColor: '#f8f8f8',
         borderBottomWidth: 1,
-        borderColor: '#eee'
+       borderColor: '#eee'
     },
     listItemView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+       alignItems: 'center'
     },
     listItemText: {
         fontSize: 18

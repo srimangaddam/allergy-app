@@ -2,8 +2,8 @@ import React from 'react';
 import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-const ListResults = ({item, deleteItem, navigate}) => {
-
+const ListResults = ({item,navigate}) => {
+    //formats output from JSON output from barcode API
     const test = JSON
         .parse(item)
         .name
@@ -13,15 +13,7 @@ const ListResults = ({item, deleteItem, navigate}) => {
         <TouchableOpacity style={styles.listItem}>
             <View style={styles.listItemView}>
                 <Text style={styles.listItemText}>{test}</Text>
-                <View style={{margin:5,  flexDirection: 'row',}}>
-        {/*        <Icon
-                    name='trash'
-                    size={20}
-                    color="firebrick"
-                    onPress=
-                    {() => deleteItem(item) }/>*/
-        }
-
+                <View style={styles.btn}>
                 <Button onPress={() => navigate(JSON.parse(item))} title="Info"/>
                 </View>
             </View>
@@ -43,6 +35,10 @@ const styles = StyleSheet.create({
     listItemText: {
         fontSize: 18,
         width: "80%"
+    },
+    btn:{
+        margin:5,  
+        flexDirection: 'row'
     }
 })
 

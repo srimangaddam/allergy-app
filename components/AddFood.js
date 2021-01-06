@@ -2,19 +2,21 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-const AddFood = ({title, addFood}) => {
+const AddFood = ({addFood}) => {
     const [text,
         setText] = useState('');
 
     const onChange = textValue => setText(textValue);
 
     return (
-        <View><TextInput
+        <View style={styles.addFoodBox}><TextInput
             placeholder="Add Food..."
             style={styles.input}
             onChangeText={onChange}/>
             <TouchableOpacity style={styles.btn} onPress={() => addFood(text)}>
-                <Text style={styles.btnText}><Icon name="plus" size={20}/> Add Food</Text>
+                <Text style={styles.btnText}><Icon name="plus" size={20}/> {//addFood
+                }
+                </Text>
             </TouchableOpacity>
         </View>
 
@@ -22,15 +24,18 @@ const AddFood = ({title, addFood}) => {
 }
 
 const styles = StyleSheet.create({
-    input: {
-        height: 60,
-        padding: 8,
-        fontSize: 16
+    addFoodBox: {
+        flexDirection:'row', 
+        justifyContent: 'center',
     },
-    bth: {
-        backgroundColor: '#c2bad8',
-        padding: 9,
-        margin: 5
+    input: {
+        fontSize: 18,
+        height: 60,
+        padding: 8
+    },
+    btn: {
+        margin: 5,
+        padding: 9
     },
     btnText: {
         color: 'darkslateblue',

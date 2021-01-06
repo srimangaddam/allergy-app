@@ -3,18 +3,27 @@ import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 const ListResults = ({item, deleteItem, navigate}) => {
+
+    const test = JSON
+        .parse(item)
+        .name
+        .replace('""', ' ')
+        .replace(/["]+/g, '')
     return (
         <TouchableOpacity style={styles.listItem}>
             <View style={styles.listItemView}>
-    <Text style={styles.listItemText}>{JSON.parse(item).name}</Text>
-                <Icon
+                <Text style={styles.listItemText}>{test}</Text>
+                <View style={{margin:5,  flexDirection: 'row',}}>
+        {/*        <Icon
                     name='trash'
                     size={20}
                     color="firebrick"
                     onPress=
-                    {() => deleteItem(item) }/>
+                    {() => deleteItem(item) }/>*/
+        }
 
                 <Button onPress={() => navigate(JSON.parse(item))} title="Info"/>
+                </View>
             </View>
         </TouchableOpacity>
     )
@@ -22,18 +31,18 @@ const ListResults = ({item, deleteItem, navigate}) => {
 
 const styles = StyleSheet.create({
     listItem: {
-        padding: 15,
-    //    backgroundColor: '#f8f8f8',
+        padding: "7%",
         borderBottomWidth: 1,
-       borderColor: '#eee'
+        borderColor: '#eee'
     },
     listItemView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-       alignItems: 'center'
+        alignItems: 'center'
     },
     listItemText: {
-        fontSize: 18
+        fontSize: 18,
+        width: "80%"
     }
 })
 

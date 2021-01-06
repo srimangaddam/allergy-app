@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Text, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
-import Header from './Header';
 
 
 class ProductScanRNCamera extends Component {
@@ -90,7 +89,7 @@ const styles = {
     },
     overlay: {
         position: 'absolute',
-        padding: 16,
+        padding: "5%",
         right: 0,
         left: 0,
         alignItems: 'center'

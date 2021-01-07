@@ -1,20 +1,27 @@
 import React from 'react';
 import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
-const ListResults = ({item, navigate}) => {
+const ListResults = ({item, allergens, navigate}) => {
+
     //formats output from JSON output from barcode API
-    const test = JSON
+    const scanTitle = JSON
         .parse(item)
         .name
         .replace('""', ' ')
         .replace(/["]+/g, '')
-    if (test==5) 
+    const ingredients = JSON.parse(item).ingredients.toLowerCase()
+    let allergenFound = false
+    for(let i =0; i<allergens.length; i++){
+        if(ingredients.includes(allergens[i].toLowerCase()))
+        allergenFound = true
+    }
+    if (allergenFound) 
         return (
             <TouchableOpacity style={styles.listItem}>
                 <View style={styles.listItemView}>
                     <Text style={styles.iconWarning}>
                         <Icon name="warning" size={33}/></Text>
-                    <Text style={styles.listItemText}>{test}</Text>
+                    <Text style={styles.listItemText}>{scanTitle}</Text>
                     <View style={styles.btn}>
                         <Button
                             onPress={() => navigate(JSON.parse(item))}
@@ -30,7 +37,7 @@ const ListResults = ({item, navigate}) => {
             <View style={styles.listItemView}>
                 <Text style={styles.iconCheck}>
                     <Icon name="check" size={33}/></Text>
-                <Text style={styles.listItemText}>{test}</Text>
+                <Text style={styles.listItemText}>{scanTitle}</Text>
                 <View style={styles.btn}>
                         <Button
                             onPress={() => navigate(JSON.parse(item))}

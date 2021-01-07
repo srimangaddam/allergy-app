@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Button, Text, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
-
 class ProductScanRNCamera extends Component {
 
     constructor(props) {
@@ -14,46 +13,66 @@ class ProductScanRNCamera extends Component {
             camera: {
                 type: RNCamera.Constants.Type.back,
                 flashMode: RNCamera.Constants.FlashMode.auto
-            }
+            },
+            status: "Searching For Barcode"
         };
     }
 
     onBarCodeRead(scanResult) {
-
+        //checks if a barcode is scanned
         if (scanResult.data != null) {
-            //need to say if item already scanned or if item is not valid
-            //tell user when barcode captured
+            //checks if barcode is already scanned before
             if (!this.barcodeCodes.includes(scanResult.data)) {
                 this
                     .barcodeCodes
                     .push(scanResult.data);
                 const url = 'https://world.openfoodfacts.org/api/v0/product/' + scanResult.data + '.json';
                 fetch(url).then((response) => response.json()).then((json) => {
-                    let brand = JSON.stringify(json.product.brands)
-                    let product = JSON.stringify(json.product.product_name_en)
-                    let ing = JSON.stringify(json.product.ingredients_text)
-                    let obj = JSON.stringify({name: brand+product,ingredients: ing})
-                    this.sendData(obj);
-                    // Show user that barcode was scanned and waiting in results, maybe through an
-                    // alter send data to results
-
+                    if (JSON.stringify(json.status_verbose) != '"product not found"') {
+                        let title = JSON.stringify(json.product.brands) + JSON.stringify(json.product.product_name_en)
+                        // formats output by adding spaces where two double quotations exist removing
+                        // all quotations from string and capitalizing only first letter of each word
+                        title = title
+                            .replace('""', ' ')
+                            .replace(/["]+/g, '')
+                            .toLowerCase()
+                            .split(' ')
+                            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                            .join(' ')
+                        this.setState({
+                            status: title + " Confirmed \n Scan More Items or Open Results Page"
+                        })
+                        let brand = JSON.stringify(json.product.brands)
+                        let product = JSON.stringify(json.product.product_name_en)
+                        let ing = JSON.stringify(json.product.ingredients_text)
+                        let obj = JSON.stringify({
+                            name: brand + product,
+                            ingredients: ing
+                        })
+                        //sending data to Results Screen
+                        this.sendData(obj);
+                    } else {
+                        this.setState({status: "Item Not Found or Is Not a Food \n Try Another Item"})
+                    }
                 }).catch((error) => {
                     console.warn(error);
                 });
-            
+
             }
         }
         return;
     }
-sendData = (data) => {
-this.props.receiveIng(data);
-}     
+    sendData = (data) => {
+        this
+            .props
+            .receiveIng(data);
+    }
 
     render() {
 
         return (
             <View style={styles.container}>
-                 
+
                 <RNCamera
                     captureAudio={false}
                     ref={ref => {
@@ -70,7 +89,8 @@ this.props.receiveIng(data);
                     style={styles.preview}
                     type={this.state.camera.type}/>
                 <View style={[styles.overlay, styles.topOverlay]}>
-                    <Text style={styles.scanScreenMessage}>Please scan the barcode.</Text>
+                    <Text style={styles.scanScreenMessage}>
+                        {"Please Scan the Barcode\n\n Status: " + this.state.status}</Text>
                 </View>
 
             </View>
@@ -98,15 +118,11 @@ const styles = {
         top: 0,
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        justifyContent: 'space-between'
     },
     scanScreenMessage: {
         fontSize: 14,
-        color: 'white',
-        textAlign: 'center',
-        alignItems: 'center',
-        justifyContent: 'center'
+        color: 'white'
     }
 };
 

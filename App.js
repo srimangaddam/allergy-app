@@ -242,7 +242,7 @@ const App = () => {
 
                     <View style={styles.container}>
                         <View style={styles.header}>
-                            <Text style={styles.headerText}>Loading</Text>
+                            <Text style={styles.headerText}>Loading...</Text>
                         </View>
                         <View style={styles.footer}>
                         </View >
@@ -406,7 +406,7 @@ const App = () => {
                 screenOptions={({route}) => ({
                 tabBarIcon: ({focused, color, size}) => {
                     let iconName;
-                    if (route.name === 'Enter Allergy') {
+                    if (route.name === 'Enter Allergen') {
                         iconName = focused
                             ? 'add-circle'
                             : 'add-circle-outline';
@@ -434,7 +434,7 @@ const App = () => {
                 activeTintColor: 'tomato',
                 inactiveTintColor: 'gray'
             }}>
-                <Tab.Screen name="Enter Allergy" component={Screen1}/>
+                <Tab.Screen name="Enter Allergen" component={Screen1}/>
                 <Tab.Screen name="Scan Barcode" component={Screen2}/>
                 <Tab.Screen name="Results" component={ResultsStackScreen}/>
                 <Tab.Screen name="Restaurants" component={RestaurantsStackScreen}/>

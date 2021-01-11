@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
+// List item showing a user inputted allergen
 const ListItem = ({item, deleteItem}) => {
     return (
         <TouchableOpacity style={styles.listItem}>
@@ -21,14 +22,13 @@ const ListItem = ({item, deleteItem}) => {
 const styles = StyleSheet.create({
     listItem: {
         padding: "5%",
-     //  backgroundColor: '#f8f8f8',
-      borderBottomWidth: 1,
-       borderColor: '#eee',
+        borderBottomWidth: 1,
+        borderColor: '#eee'
     },
     listItemView: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'center'
     },
     listItemText: {
         fontSize: 18

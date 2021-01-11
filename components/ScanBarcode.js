@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Text, View} from 'react-native';
 import {RNCamera} from 'react-native-camera';
 
-class ProductScanRNCamera extends Component {
+class ScanBarcode extends Component {
 
     constructor(props) {
         super(props);
@@ -28,6 +28,7 @@ class ProductScanRNCamera extends Component {
                     .push(scanResult.data);
                 const url = 'https://world.openfoodfacts.org/api/v0/product/' + scanResult.data + '.json';
                 fetch(url).then((response) => response.json()).then((json) => {
+                    console.warn(json)
                     if (JSON.stringify(json.status_verbose) != '"product not found"') {
                         let title = JSON.stringify(json.product.brands) + JSON.stringify(json.product.product_name_en)
                         // formats output by adding spaces where two double quotations exist removing
@@ -126,4 +127,4 @@ const styles = {
     }
 };
 
-export default ProductScanRNCamera;
+export default ScanBarcode;

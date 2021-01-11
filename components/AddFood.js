@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
+// Text field that allows user to input an allergen
 const AddFood = ({addFood}) => {
     const [text,
         setText] = useState('');
@@ -14,8 +15,7 @@ const AddFood = ({addFood}) => {
             style={styles.input}
             onChangeText={onChange}/>
             <TouchableOpacity style={styles.btn} onPress={() => addFood(text)}>
-                <Text style={styles.btnText}><Icon name="plus" size={20}/> {//addFood
-                }
+                <Text style={styles.btnText}><Icon name="plus" size={20}/>
                 </Text>
             </TouchableOpacity>
         </View>
@@ -25,8 +25,8 @@ const AddFood = ({addFood}) => {
 
 const styles = StyleSheet.create({
     addFoodBox: {
-        flexDirection:'row', 
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center'
     },
     input: {
         fontSize: 18,

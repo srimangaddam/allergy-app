@@ -2,55 +2,55 @@ import React from 'react';
 import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
-// List item showing a specific product scanned by user
-const ListResults = ({item, allergens, navigate}) => {
-    //  Formats JSON output from barcode API
-    const scanTitle = JSON
-        .parse(item)
-        .name
-        .replace('""', ' ')
-        .replace(/["]+/g, '')
-    const ingredients = JSON.parse(item).ingredients.toLowerCase()
+//  List item showing a specific menu item of the chosen restaurant
+const ListMenuItems = ({item, allergens, navigate, fullMenu}) => {
+    let menuItemIngredients = ''
+    // Locating ingredients of the menu item
+    for (let i = 0; i < fullMenu.length; i++) {
+        if (fullMenu[i].menuItem == item) 
+            menuItemIngredients = fullMenu[i].ingredients
+    }
     let allergenFound = false
     // Checking if allergens are present
-    for(let i =0; i<allergens.length; i++){
-        if(ingredients.includes(allergens[i].toLowerCase()))
-        allergenFound = true
+    for (let i = 0; i < allergens.length; i++) {
+        if (menuItemIngredients.toLowerCase().includes(allergens[i].toLowerCase())) 
+            allergenFound = true
     }
-    // Display output if allergens are detected
+    // Display showing particular menu item contains an allergen
     if (allergenFound) 
         return (
             <TouchableOpacity style={styles.listItem}>
                 <View style={styles.listItemView}>
                     <Text style={styles.iconWarning}>
                         <Icon name="warning" size={33}/></Text>
-                    <Text style={styles.listItemText}>{scanTitle}</Text>
+                    <Text style={styles.listItemText}>{item}</Text>
                     <View style={styles.btn}>
                         <Button
-                            onPress={() => navigate(JSON.parse(item))}
+                            onPress={() => navigate(menuItemIngredients)}
                             title="Info"
                             color="#8b0000"/>
                     </View>
                 </View>
             </TouchableOpacity>
         )
-    // Display output if allergens are not detected
+    //  Display showing particular menu item does not contain an allergen        
     else 
         return (
             <TouchableOpacity style={styles.listItem}>
-            <View style={styles.listItemView}>
-                <Text style={styles.iconCheck}>
-                    <Icon name="check" size={33}/></Text>
-                <Text style={styles.listItemText}>{scanTitle}</Text>
-                <View style={styles.btn}>
+                <View style={styles.listItemView}>
+                    <Text style={styles.iconCheck}>
+                        <Icon name="check" size={33}/></Text>
+                    <Text style={styles.listItemText}>{item}</Text>
+                    <View style={styles.btn}>
                         <Button
-                            onPress={() => navigate(JSON.parse(item))}
+                            onPress={() => navigate(menuItemIngredients)}
                             title="Info"
                             color="#149414"/>
                     </View>
                 </View>
             </TouchableOpacity>
         )
+
 }
 
 const styles = StyleSheet.create({
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         right: "1%",
         padding: "7%",
         borderBottomWidth: 1,
-        borderColor: '#eee'
+        borderColor: '#dddddd'
     },
     listItemView: {
         flexDirection: 'row',
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default ListResults;
+export default ListMenuItems;
